@@ -6,7 +6,7 @@ module.exports = {
 
         try {
 
-            const [users] = await connection('users').select('*')
+            const users = await connection('users').select('*')
             
             return res.json({
                 users,
