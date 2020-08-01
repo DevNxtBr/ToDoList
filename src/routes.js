@@ -1,7 +1,12 @@
 const express = require('express')
 
-const UserController = require('./controllers/UserController')
-const TaskController = require('./controllers/TaskController')
+const IconsController = require('./controllers/IconsController')
+const UsersController = require('./controllers/UsersController')
+const TasksController = require('./controllers/TasksController')
+
+const iconsContoller = new IconsController()
+const usersContoller = new UsersController()
+const tasksContoller = new TasksController()
 
 const routes = express.Router()
 
@@ -11,15 +16,17 @@ routes.get('/', (req, res, next) => {
     })
 })
 
-routes.get('/users', UserController.index)
-routes.post('/login', UserController.login)
-routes.post('/users', UserController.create)
-routes.put('/users/:id', UserController.update)
-routes.delete('/users/:id', UserController.delete)
+routes.get('/icons', iconsContoller.index)
 
-routes.get('/tasks', TaskController.index)
-routes.post('/tasks', TaskController.create)
-routes.put('/tasks/:id', TaskController.update)
-routes.delete('/tasks/:id', TaskController.delete)
+routes.get('/users', usersContoller.index)
+routes.post('/login', usersContoller.login)
+routes.post('/users', usersContoller.create)
+routes.put('/users/:id', usersContoller.update)
+routes.delete('/users/:id', usersContoller.delete)
+
+routes.get('/tasks', tasksContoller.index)
+routes.post('/tasks', tasksContoller.create)
+routes.put('/tasks/:id', tasksContoller.update)
+routes.delete('/tasks/:id', tasksContoller.delete)
 
 module.exports = routes

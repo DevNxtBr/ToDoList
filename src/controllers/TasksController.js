@@ -1,6 +1,6 @@
 const connection = require('../database/connection')
 
-module.exports = {
+class TasksController {
     
     async index(req, res, next) {
 
@@ -16,7 +16,7 @@ module.exports = {
             next(err)
         }
 
-    },
+    }
     
     async create(req, res, next) {
 
@@ -59,7 +59,7 @@ module.exports = {
             next(err)
         }
 
-    },
+    }
 
     async update(req, res, next) {
 
@@ -105,7 +105,7 @@ module.exports = {
             next(err)
         }
 
-    },
+    }
 
     async delete(req, res, next) {
 
@@ -132,6 +132,8 @@ module.exports = {
             next(err)
         }
 
-    },
+    }
 
 }
+
+module.exports = TasksController

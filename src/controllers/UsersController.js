@@ -1,6 +1,6 @@
 const connection = require('../database/connection')
 
-module.exports = {
+class UsersController {
     
     async index(req, res, next) {
 
@@ -16,7 +16,7 @@ module.exports = {
             next(err)
         }
 
-    },
+    }
 
     async login (req, res, next) {
 
@@ -46,7 +46,7 @@ module.exports = {
             // return res.status(400).send({ error: 'Login failed: ', err })
         }
 
-    },
+    }
     
     async create(req, res, next) {
 
@@ -87,7 +87,7 @@ module.exports = {
             next(err)
         }
 
-    },
+    }
 
     async update(req, res, next) {
 
@@ -136,7 +136,7 @@ module.exports = {
             next(err)
         }
 
-    },
+    }
 
     async delete(req, res, next) {
 
@@ -163,6 +163,8 @@ module.exports = {
             next(err)
         }
 
-    },
+    }
 
 }
+
+module.exports = UsersController
