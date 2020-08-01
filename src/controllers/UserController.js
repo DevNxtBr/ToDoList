@@ -17,6 +17,36 @@ module.exports = {
         }
 
     },
+
+    async login (req, res, next) {
+
+        try {
+        
+            const { email, password } = req.body
+
+            const [user] = await connection('users').select('*').where('email', email)
+
+            if(!user)
+                return res.status(400).send({ error: 'E-mail not found' })
+
+            if (password != user.password)
+                return res.status(400).send({ error: 'Invalid password' })
+
+            return res.json({
+                id: user.id,
+                name: user.name, 
+                email, 
+                password,
+                message: 'Login realizado com sucesso!'
+            })
+
+        } catch (err) {
+            next(err)
+            // console.log(err)
+            // return res.status(400).send({ error: 'Login failed: ', err })
+        }
+
+    },
     
     async create(req, res, next) {
 

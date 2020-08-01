@@ -110,9 +110,22 @@ module.exports = {
     async delete(req, res, next) {
 
         try {
+
+            const { id } = req.params
+
+            // verifica se o id existe
+            const [user] = await connection('tasks').select('*').where('id', id)
+
+            if(!user)
+                return res.status(400).send({ error: 'Não foi possivel excluir a tarefa, (id não foi encontrado)!' })
+
+            const result = await connection('tasks')
+                .where('id', id)
+                .del()
             
             return res.json({
-                message: 'em desenvolvimento'
+                message: 'Tarefa excluida com sucesso!',
+                id,
             })
 
         } catch (err) {
