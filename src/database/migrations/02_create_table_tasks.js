@@ -4,7 +4,7 @@ exports.up = function(knex) {
         table.increments('id').primary()
         table.string('description').notNullable()
         table.integer('difficulty').notNullable()
-        table.boolean('concluded')
+        table.boolean('concluded').defaultTo(false)
 
         table.integer('owner')
             .notNullable()
