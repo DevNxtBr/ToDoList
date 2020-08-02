@@ -18,6 +18,7 @@ class UsersController {
             
             return res.json({
                 users,
+                success: true,
             })
 
         } catch (err) {
@@ -35,17 +36,18 @@ class UsersController {
             const [user] = await connection('users').select('*').where('email', email)
 
             if(!user)
-                return res.status(400).send({ error: 'E-mail not found' })
+                return res.status(400).send({ message: 'E-mail not found' })
 
             if (password != user.password)
-                return res.status(400).send({ error: 'Invalid password' })
+                return res.status(400).send({ message: 'Invalid password' })
 
             return res.json({
                 id: user.id,
                 name: user.name, 
                 email, 
                 password,
-                message: 'Login realizado com sucesso!'
+                message: 'Login realizado com sucesso!',
+                success: true,
             })
 
         } catch (err) {
@@ -75,7 +77,7 @@ class UsersController {
             let [user] = await connection('users').count('*').where('email', email)
 
             if(user.count > 0) 
-                return res.status(400).send({ error: 'E-mail ja cadastrado' })
+                return res.status(400).send({ message: 'E-mail ja cadastrado' })
 
             // insere o registro no banco de dados
             const [userId] = await connection('users').insert({
@@ -89,6 +91,7 @@ class UsersController {
                 message: 'Usuário cadastrado com sucesso!',
                 id: userId,
                 email,
+                success: true,
             })
 
         } catch (err) {
@@ -133,11 +136,12 @@ class UsersController {
             
             // retorna a mensagem de alterado com sucesso e mostra os dados que ficaram
             return res.json({
-                message: 'Usuário alterado com sucesso!',
                 id,
                 name,
                 email,
                 password,
+                message: 'Usuário alterado com sucesso!',
+                success: true,
             })
 
         } catch (err) {
@@ -156,15 +160,16 @@ class UsersController {
             const [user] = await connection('users').select('*').where('id', id)
 
             if(!user)
-                return res.status(400).send({ error: 'Não foi possivel excluir o registro, (id não foi encontrado)!' })
+                return res.status(400).send({ message: 'Não foi possivel excluir o registro, (id não foi encontrado)!' })
 
             const result = await connection('users')
                 .where('id', id)
                 .del()
             
             return res.json({
-                message: 'Registro excluido com sucesso!',
                 id,
+                message: 'Registro excluido com sucesso!',
+                success: true,
             })
 
         } catch (err) {

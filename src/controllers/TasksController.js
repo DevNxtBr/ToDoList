@@ -18,6 +18,7 @@ class TasksController {
 
             return res.json({
                 tasks,
+                success: true,
             })
 
         } catch (err) {
@@ -45,7 +46,7 @@ class TasksController {
             let [user] = await connection('users').where('id', owner)
 
             if(!user) 
-                return res.status(400).send({ error: 'Dono da tarefa inválido!' })
+                return res.status(400).send({ message: 'Dono da tarefa inválido!' })
 
             // insere o registro no banco de dados
             const [taskId] = await connection('tasks').insert({
@@ -56,11 +57,12 @@ class TasksController {
             
             // retorna uma resposta com a messagem, id do registro inserido e o email do registro inserido
             return res.json({
-                message: 'Tarefa cadastrada com sucesso!',
                 id: taskId,
                 description, 
                 difficulty, 
                 owner,
+                message: 'Tarefa cadastrada com sucesso!',
+                success: true,
             })
 
         } catch (err) {
@@ -80,7 +82,7 @@ class TasksController {
             let [task] = await connection('tasks').where('id', id)
 
             if(!task) 
-                return res.status(400).send({ error: 'Não foi possivel localizar a tarefa!' })
+                return res.status(400).send({ message: 'Não foi possivel localizar a tarefa!' })
 
             if(description == '' || description == undefined || description == null)
                 description = task.description
@@ -101,12 +103,13 @@ class TasksController {
             
             // retorna a mensagem de alterado com sucesso e mostra os dados que ficaram
             return res.json({
-                message: 'Usuário alterado com sucesso!',
                 id,
                 description, 
                 difficulty, 
                 concluded,
-                owner: task.owner
+                owner: task.owner,
+                message: 'Usuário alterado com sucesso!',
+                success: true,
             })
 
         } catch (err) {
@@ -125,15 +128,16 @@ class TasksController {
             const [task] = await connection('tasks').select('*').where('id', id)
 
             if(!task)
-                return res.status(400).send({ error: 'Não foi possivel excluir a tarefa, (id não foi encontrado)!' })
+                return res.status(400).send({ message: 'Não foi possivel excluir a tarefa, (id não foi encontrado)!' })
 
             const result = await connection('tasks')
                 .where('id', id)
                 .del()
             
             return res.json({
-                message: 'Tarefa excluida com sucesso!',
                 id,
+                message: 'Tarefa excluida com sucesso!',
+                success: true,
             })
 
         } catch (err) {
