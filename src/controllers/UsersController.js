@@ -4,9 +4,17 @@ class UsersController {
     
     async index(req, res, next) {
 
+        const { id } = req.query
+
         try {
 
-            const users = await connection('users').select('*')
+            let query = connection('users').select('*')
+
+            if(id){
+                query.where('id', id)
+            }
+
+            const users =  await query
             
             return res.json({
                 users,
