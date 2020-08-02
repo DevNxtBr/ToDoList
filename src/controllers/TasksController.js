@@ -4,9 +4,17 @@ class TasksController {
     
     async index(req, res, next) {
 
+        const { id } = req.query
+
         try {
 
-            const tasks = await connection('tasks').select('*')
+            let query = connection('tasks').select('*')
+
+            if(id){
+                query.where('id', id)
+            }
+
+            const tasks =  await query
 
             return res.json({
                 tasks,
