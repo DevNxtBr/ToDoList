@@ -6,10 +6,10 @@ class TasksController {
 
         try {
 
-            const users = await connection('tasks').select('*')
+            const tasks = await connection('tasks').select('*')
 
             return res.json({
-                users,
+                tasks,
             })
 
         } catch (err) {
@@ -114,9 +114,9 @@ class TasksController {
             const { id } = req.params
 
             // verifica se o id existe
-            const [user] = await connection('tasks').select('*').where('id', id)
+            const [task] = await connection('tasks').select('*').where('id', id)
 
-            if(!user)
+            if(!task)
                 return res.status(400).send({ error: 'Não foi possivel excluir a tarefa, (id não foi encontrado)!' })
 
             const result = await connection('tasks')
