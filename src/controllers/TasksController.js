@@ -34,19 +34,19 @@ class TasksController {
             const { description, difficulty, owner } = req.body
 
             if(description == '' || description == undefined || description == null)
-                return res.json({ message: 'A DESCRIÇÃO é obrigatória!'})
+                return res.json({ message: 'O campo descrição é obrigatório!'})
 
             if(difficulty == '' || difficulty == undefined || difficulty == null)
-                return res.json({ message: 'A DIFICULDADE é obrigatória!'})
+                return res.json({ message: 'O campo dificuldade é obrigatório!'})
             
             if(owner == '' || owner == undefined || owner == null)
-                return res.json({ message: 'O DONO DA TAREFA é obrigatório!'})
+                return res.json({ message: 'O campo dono da tarefas é obrigatório!'})
 
             // verifica se o id do usuario (owner) existe
             let [user] = await connection('users').where('id', owner)
 
             if(!user) 
-                return res.status(400).send({ message: 'Dono da tarefa inválido!' })
+                return res.json({ message: 'Dono da tarefa inválido!' })
 
             // insere o registro no banco de dados
             const [taskId] = await connection('tasks').insert({
@@ -82,7 +82,7 @@ class TasksController {
             let [task] = await connection('tasks').where('id', id)
 
             if(!task) 
-                return res.status(400).send({ message: 'Não foi possivel localizar a tarefa!' })
+                return res.json({ message: 'Não foi possivel localizar a tarefa!' })
 
             if(description == '' || description == undefined || description == null)
                 description = task.description
@@ -128,7 +128,7 @@ class TasksController {
             const [task] = await connection('tasks').select('*').where('id', id)
 
             if(!task)
-                return res.status(400).send({ message: 'Não foi possivel excluir a tarefa, (id não foi encontrado)!' })
+                return res.json({ message: 'Não foi possivel excluir a tarefa, (id não foi encontrado)!' })
 
             const result = await connection('tasks')
                 .where('id', id)

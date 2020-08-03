@@ -34,18 +34,18 @@ class UsersController {
             const { email, password } = req.body
 
             if(email == '' || email == undefined || email == null)
-                return res.status(200).send({ message: 'O campo e-mail é obrigatório!' })
+                return res.json({ message: 'O campo e-mail é obrigatório!' })
 
             if(password == '' || password == undefined || password == null)
-                return res.status(200).send({ message: 'O campo senha é obrigatório!' })
+                return res.json({ message: 'O campo senha é obrigatório!' })
 
             const [user] = await connection('users').select('*').where('email', email)
 
             if(!user)
-                return res.status(200).send({ message: 'E-mail inválido!' })
+                return res.json({ message: 'E-mail inválido!' })
 
             if (password != user.password)
-                return res.status(200).send({ message: 'Senha inválida!' })
+                return res.json({ message: 'Senha inválida!' })
 
             return res.json({
                 id: user.id,
@@ -71,19 +71,19 @@ class UsersController {
             const { name, email, password } = req.body
 
             if(name == '' || name == undefined || name == null)
-                return res.json({ message: 'O NOME é obrigatório!'})
+                return res.json({ message: 'O campo nome é obrigatório!'})
 
             if(email == '' || email == undefined || email == null)
-                return res.json({ message: 'O E-MAIL é obrigatório!'})
+                return res.json({ message: 'O campo e-mail é obrigatório!'})
 
             if(password == '' || password == undefined || password == null)
-                return res.json({ message: 'A SENHA é obrigatória!'})
+                return res.json({ message: 'O campo senha é obrigatório!'})
 
             // verifica se ja existe o e-mail cadastrado
             let [user] = await connection('users').count('*').where('email', email)
 
             if(user.count > 0) 
-                return res.status(400).send({ message: 'E-mail ja cadastrado' })
+                return res.json({ message: 'E-mail ja cadastrado' })
 
             // insere o registro no banco de dados
             const [userId] = await connection('users').insert({
@@ -94,9 +94,9 @@ class UsersController {
             
             // retorna uma resposta com a messagem, id do registro inserido e o email do registro inserido
             return res.json({
-                message: 'Usuário cadastrado com sucesso!',
                 id: userId,
                 email,
+                message: 'Usuário cadastrado com sucesso!',
                 success: true,
             })
 
@@ -166,7 +166,7 @@ class UsersController {
             const [user] = await connection('users').select('*').where('id', id)
 
             if(!user)
-                return res.status(400).send({ message: 'Não foi possivel excluir o registro, (id não foi encontrado)!' })
+                return res.json({ message: 'Não foi possivel excluir o registro, (id não foi encontrado)!' })
 
             const result = await connection('users')
                 .where('id', id)
