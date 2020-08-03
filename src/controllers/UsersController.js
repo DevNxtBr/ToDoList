@@ -34,18 +34,18 @@ class UsersController {
             const { email, password } = req.body
 
             if(email == '' || email == undefined || email == null)
-                return res.status(400).send({ message: 'O campo e-mail é obrigatório!' })
+                return res.status(200).send({ message: 'O campo e-mail é obrigatório!' })
 
             if(password == '' || password == undefined || password == null)
-                return res.status(400).send({ message: 'O campo senha é obrigatório!' })
+                return res.status(200).send({ message: 'O campo senha é obrigatório!' })
 
             const [user] = await connection('users').select('*').where('email', email)
 
             if(!user)
-                return res.status(400).send({ message: 'E-mail not found' })
+                return res.status(200).send({ message: 'E-mail inválido!' })
 
             if (password != user.password)
-                return res.status(400).send({ message: 'Invalid password' })
+                return res.status(200).send({ message: 'Senha inválida!' })
 
             return res.json({
                 id: user.id,
