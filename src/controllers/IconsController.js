@@ -34,17 +34,17 @@ class IconsController {
 
 
             // insere o registro no banco de dados
-            const [userId] = await connection('users').insert({
-                name,
-                email,
-                password,
+            const [iconId] = await connection('icons').insert({
+                title,
+                image_url,
             }).returning('id')
             
-            // retorna uma resposta com a messagem, id do registro inserido e o email do registro inserido
+            // retorna uma resposta com os dados inseridos
             return res.json({
-                id: userId,
-                email,
-                message: 'Usuário cadastrado com sucesso!',
+                id: iconId,
+                title,
+                image_url,
+                message: 'Ícone cadastrado com sucesso!',
                 success: true,
             })
 
