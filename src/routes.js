@@ -17,6 +17,7 @@ routes.get('/', (req, res, next) => {
 })
 
 routes.get('/icons', iconsContoller.index)
+routes.get('/icons', iconsContoller.create)
 
 routes.get('/users', usersContoller.index)
 routes.post('/login', usersContoller.login)
