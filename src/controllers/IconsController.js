@@ -1,5 +1,5 @@
 const { Request, Response } = require('express')
-const knex = require('../database/connection')
+const connection = require('../database/connection')
 
 class IconsController {
 
