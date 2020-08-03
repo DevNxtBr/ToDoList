@@ -30,7 +30,7 @@ class IconsController {
                 return res.json({ message: 'O campo titulo é obrigatório!'})
 
             if(image == '' || image == undefined || image == null)
-                return res.json({ message: 'O campo url da imagem é obrigatório!'})
+                return res.json({ message: 'O campo imagem é obrigatório!'})
 
 
             // insere o registro no banco de dados
@@ -43,7 +43,7 @@ class IconsController {
             return res.json({
                 id: iconId,
                 title,
-                image_url,
+                image,
                 message: 'Ícone cadastrado com sucesso!',
                 success: true,
             })
