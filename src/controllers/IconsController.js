@@ -5,7 +5,7 @@ class IconsController {
 
     async index(req, res) {
 
-        const icons = await knex('icons').select('*')
+        const icons = await connection('icons').select('*')
     
         const serializedIcons = icons.map(icon => {
             return {
