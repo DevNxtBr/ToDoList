@@ -33,6 +33,12 @@ class UsersController {
         
             const { email, password } = req.body
 
+            if(email == '' || email == undefined || email == null)
+                return res.status(400).send({ message: 'O campo e-mail é obrigatório!' })
+
+            if(password == '' || password == undefined || password == null)
+                return res.status(400).send({ message: 'O campo senha é obrigatório!' })
+
             const [user] = await connection('users').select('*').where('email', email)
 
             if(!user)
