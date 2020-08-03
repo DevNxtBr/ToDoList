@@ -24,19 +24,19 @@ class IconsController {
 
         try {
 
-            const { title, image_url } = req.body
+            const { title, image } = req.body
 
             if(title == '' || title == undefined || title == null)
                 return res.json({ message: 'O campo titulo é obrigatório!'})
 
-            if(image_url == '' || image_url == undefined || image_url == null)
+            if(image == '' || image == undefined || image == null)
                 return res.json({ message: 'O campo url da imagem é obrigatório!'})
 
 
             // insere o registro no banco de dados
             const [iconId] = await connection('icons').insert({
                 title,
-                image_url,
+                image,
             }).returning('id')
             
             // retorna uma resposta com os dados inseridos
