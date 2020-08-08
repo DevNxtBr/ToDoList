@@ -4,15 +4,17 @@ class TasksController {
     
     async index(req, res, next) {
 
-        const { id } = req.query
+        const { id, userId } = req.query
 
         try {
 
             let query = connection('tasks').select('*')
 
-            if(id){
+            if(userId)
+                query.where('owner', userId)
+
+            if(id)
                 query.where('id', id)
-            }
 
             const tasks =  await query
 

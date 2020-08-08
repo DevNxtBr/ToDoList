@@ -113,10 +113,6 @@ class UsersController {
             const { id } = req.params
             let { name, email, password } = req.body
 
-            // verifica se foi enviado o header com a palavra chave (temporariamente deixei fixo, mas podemos alterar para o jwt token que deixa mais seguro)
-            if(req.headers.admin != 'pode-editar')
-                return res.json({ message: 'Usuário sem permissão para alterar o registro' })
-
             // consulta no banco de dados se o usuario existe (buscando pelo id)
             let [user] = await connection('users').select('*').where('id', id)
             // se nao encontrar nenhum usuario retona a mensagem de ID invalido
